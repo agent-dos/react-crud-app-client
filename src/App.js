@@ -14,6 +14,8 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost:5000';
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [formData, setFormData] = useState({ title: '', description: '' });
@@ -23,7 +25,7 @@ function App() {
   }, []);
 
   const fetchTodos = async () => {
-    const response = await axios.get('http://localhost:5000/todos');
+    const response = await axios.get(`${SERVER_URL}/todos`);
     setTodos(response.data);
   };
 
@@ -33,7 +35,7 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/todos', formData);
+    await axios.post(`${SERVER_URL}/todos`, formData);
     setFormData({ title: '', description: '' });
     fetchTodos();
   };
@@ -44,7 +46,7 @@ function App() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/todos/${id}`);
+    await axios.delete(`localhost:5000/todos/${id}`);
     fetchTodos();
   };
 
